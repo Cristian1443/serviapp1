@@ -1,0 +1,46 @@
+### Crear una nueva evidencia
+# El contenido del archivo se envía como un string en formato Base64.
+POST http://localhost:8000/evidencias/
+Content-Type: application/json
+
+{
+  "id_solicitud": 14,
+  "id_usuario": 2,
+  "id_profesional": null,
+  "tipo_actor": "usuario",
+  "descripcion": "Evidencia de trabajo inicial subida por el cliente.",
+  "estado": "satisfactorio",
+  "archivo_base64": "SG9sYSBtdW5kbw=="
+}
+
+### Separador para las solicitudes ###
+### Obtener todas las evidencias
+# Esta respuesta no incluirá el contenido de los archivos para no ser demasiado pesada.
+GET http://localhost:8000/evidencias/
+
+
+### Separador para las solicitudes ###
+### Obtener una evidencia por su ID
+# La respuesta tampoco incluirá el contenido del archivo.
+GET http://localhost:8000/evidencias/1
+
+
+### Separador para las solicitudes ###
+### Actualizar una evidencia
+PUT http://localhost:8000/evidencias/1
+Content-Type: application/json
+
+{
+  "id_solicitud": 101,
+  "id_usuario": 202,
+  "id_profesional": 303,
+  "tipo_actor": "profesional",
+  "descripcion": "Evidencia actualizada por el profesional con correcciones.",
+  "estado": "satisfactorio",
+  "archivo_base64": "SGF5IHF1ZSBhY3R1YWxpemFyIGVzdGUgYXJjaGl2bw=="
+}
+
+
+### Separador para las solicitudes ###
+### Eliminar una evidencia
+DELETE http://localhost:8000/evidencias/1

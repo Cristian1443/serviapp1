@@ -1,0 +1,253 @@
+.solicitud-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.header-nav {
+  background-color: #4a5d75;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-circle {
+  width: 30px;
+  height: 30px;
+  background-color: #ffc107;
+  border-radius: 50%;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-btn {
+  background-color: #ffc107;
+  color: #333;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  background-color: #e0a800;
+}
+
+.nav-btn.active {
+  background-color: #fff;
+  color: #4a5d75;
+}
+
+.user-icon {
+  background-color: #ffc107;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.solicitud-content {
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.solicitud-form {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus, .form-textarea:focus {
+  outline: none;
+  border-color: #4a5d75;
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.date-input-container {
+  position: relative;
+}
+
+.date-input {
+  padding-right: 45px;
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.form-actions {
+  text-align: right;
+  margin-top: 30px;
+}
+
+.submit-btn {
+  background-color: #4a5d75;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+  min-width: 120px;
+}
+
+.submit-btn:hover {
+  background-color: #3a4d65;
+}
+
+.submit-btn:active {
+  transform: translateY(1px);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .solicitud-content {
+    padding: 15px;
+  }
+  
+  .form-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .solicitud-form {
+    padding: 15px;
+  }
+  
+  .nav-buttons {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .nav-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  
+  .form-input, .form-textarea {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .solicitud-content {
+    padding: 10px;
+  }
+  
+  .form-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .solicitud-form {
+    padding: 10px;
+  }
+  
+  .header-nav {
+    padding: 10px 15px;
+  }
+  
+  .nav-circle {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .user-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+  
+  .nav-btn {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+}
+
+/* Animaciones */
+.solicitud-form {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estados de validación */
+.form-input:invalid:not(:focus):not(:placeholder-shown) {
+  border-color: #dc3545;
+}
+
+.form-input:valid:not(:focus):not(:placeholder-shown) {
+  border-color: #28a745;
+}

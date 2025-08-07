@@ -1,0 +1,44 @@
+### Crear un nuevo usuario (con timestamp)
+POST http://localhost:8000/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Juan",
+  "apellido": "Pérez",
+  "correo": "juana.perez@example.com",
+  "telefono": "3214567890",
+  "direccion": "Calle Falsa 123",
+  "contrasena": "password123",
+  "fecha_registro": 1754592000
+}
+
+###
+
+### Obtener todos los usuarios
+GET http://localhost:8000/usuarios
+
+###
+
+### Obtener un usuario por ID
+GET http://localhost:8000/usuarios/1
+
+###
+
+### Actualizar un usuario existente (con timestamp)
+PUT http://localhost:8000/usuarios/1
+Content-Type: application/json
+
+{
+  "nombre": "Juan Carlos",
+  "apellido": "Pérez",
+  "correo": "juan.carlos@example.com",
+  "telefono": "3214567890",
+  "direccion": "Carrera 45 #12-34",
+  "contrasena": "nuevaPassword456",
+  "fecha_registro": 1754592000
+}
+
+###
+
+### Eliminar permanentemente un usuario
+DELETE http://localhost:8000/usuarios/1

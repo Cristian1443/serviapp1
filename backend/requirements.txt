@@ -1,0 +1,52 @@
+# Framework web
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# Base de datos
+psycopg2-binary==2.9.9
+pymysql==1.1.0
+mysql-connector-python==8.2.0
+sqlalchemy==2.0.23
+
+# Utilidades
+python-dotenv==1.0.0
+pydantic==2.5.0
+python-multipart==0.0.6
+
+# Seguridad
+passlib==1.7.4
+bcrypt==4.1.2
+python-jose[cryptography]==3.3.0
+
+# Validación y serialización
+marshmallow==3.20.1
+marshmallow-dataclass==8.6.0
+
+# Logging y monitoreo
+structlog==23.2.0
+python-json-logger==2.0.7
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Herramientas de desarrollo
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1
+
+# CORS y middleware
+python-cors==1.7.0
+
+# Manejo de fechas
+python-dateutil==2.8.2
+
+# Procesamiento de archivos
+pillow==10.1.0
+
+# Cache (opcional)
+redis==5.0.1
+
+# Monitoreo de performance
+psutil==5.9.6

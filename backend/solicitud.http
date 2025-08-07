@@ -1,0 +1,42 @@
+### Crear solicitud
+POST http://localhost:8000/solicitudes HTTP/1.1
+Content-Type: application/json
+
+{
+  "id_usuario": 1,
+  "id_profesional": 2,
+  "id_servicio": 1,
+  "descripcion": "Instalación de aire acondicionado",
+  "direccion_servicio": "Calle 45 #23-10",
+  "telefono_contacto": "3101234567",
+  "fecha_servicio": "2025-08-15",
+  "hora_servicio": "14:30:00",
+  "presupuesto": 250000,
+  "estado": "pendiente"
+}
+
+### Obtener todas las solicitudes
+GET http://localhost:8000/solicitudes HTTP/1.1
+
+### Obtener una solicitud por ID
+GET http://localhost:8000/solicitudes/1 HTTP/1.1
+
+### Actualizar solicitud
+PUT http://localhost:8000/solicitudes/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id_usuario": 1,
+  "id_profesional": 2,
+  "id_servicio": 1,
+  "descripcion": "Cambio de aire acondicionado",
+  "direccion_servicio": "Carrera 12 #34-56",
+  "telefono_contacto": "3107654321",
+  "fecha_servicio": "2025-08-20",
+  "hora_servicio": "10:00:00",
+  "presupuesto": 300000,
+  "estado": "aceptada"
+}
+
+### Eliminar solicitud
+DELETE http://localhost:8000/solicitudes/1 HTTP/1.1

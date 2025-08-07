@@ -1,0 +1,42 @@
+### Pruebas API Evidencias
+
+### Obtener todas las evidencias
+GET http://localhost:8000/evidencias/
+Content-Type: application/json
+
+### Crear nueva evidencia
+POST http://localhost:8000/evidencias/
+Content-Type: application/json
+
+{
+  "id_solicitud": 1,
+  "id_usuario": 1,
+  "id_profesional": 2,
+  "tipo_actor": "usuario",
+  "descripcion": "Evidencia de prueba desde HTTP",
+  "estado": "activo",
+  "archivo_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
+}
+
+### Obtener evidencia por ID
+GET http://localhost:8000/evidencias/1
+Content-Type: application/json
+
+### Actualizar evidencia
+PUT http://localhost:8000/evidencias/1
+Content-Type: application/json
+
+{
+  "id_solicitud": 1,
+  "id_usuario": 1,
+  "id_profesional": 3,
+  "tipo_actor": "profesional",
+  "descripcion": "Evidencia actualizada desde HTTP",
+  "estado": "inactivo",
+  "archivo_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
+}
+
+### Eliminar evidencia
+DELETE http://localhost:8000/evidencias/1
+Content-Type: application/json
+

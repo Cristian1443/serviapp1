@@ -1,0 +1,46 @@
+### Crear un nuevo profesional
+POST http://localhost:8000/profesional
+Content-Type: application/json
+
+{
+  "nombre": "Ana",
+  "apellido": "Gomez",
+  "correo": "ana.gomez@example.com",
+  "telefono": "3109876543",
+  "contrasena": "profesionalPass123",
+  "profesion": "Ingeniera de Software",
+  "habilidades": "Python, FastAPI, SQL",
+  "zona_trabajo": "Norte"
+}
+
+###
+
+### Obtener todos los profesionales
+GET http://localhost:8000/profesional
+
+###
+
+### Obtener un profesional por ID
+GET http://localhost:8000/profesional/1
+
+###
+
+### Actualizar un profesional existente
+PUT http://localhost:8000/profesional/1
+Content-Type: application/json
+
+{
+  "nombre": "Ana María",
+  "apellido": "Gomez",
+  "correo": "ana.maria.gomez@example.com",
+  "telefono": "3109876543",
+  "contrasena": "newProfesionalPass456",
+  "profesion": "Arquitecta de Software",
+  "habilidades": "Python, FastAPI, SQL, Docker, AWS",
+  "zona_trabajo": "Sur"
+}
+
+###
+
+### Eliminar permanentemente un profesional
+DELETE http://localhost:8000/profesional/1

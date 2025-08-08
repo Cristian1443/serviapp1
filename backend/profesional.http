@@ -3,10 +3,10 @@ POST http://localhost:8000/profesional
 Content-Type: application/json
 
 {
-  "nombre": "Ana",
-  "apellido": "Gomez",
-  "correo": "ana.gomez@example.com",
-  "telefono": "3109876543",
+  "nombre": "Adan",
+  "apellido": "Subachque",
+  "correo": "adan@example.com",
+  "telefono": "3501234567",
   "contrasena": "profesionalPass123",
   "profesion": "Ingeniera de Software",
   "habilidades": "Python, FastAPI, SQL",

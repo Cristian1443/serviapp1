@@ -1,6 +1,5 @@
-from modulos.profesional.acceso_datos.profesional_dao import ProfesionalDAOMySQL
-from modulos.profesional.acceso_datos.dao_factory import ProfesionalDAOFactory
+from .profesional_dao import ProfesionalDAO # <- Importar la clase unificada
 
-class MySQLProfesionalDAOFactory(ProfesionalDAOFactory):
+class MySQLProfesionalDAOFactory:
     def crear_dao(self):
-        return ProfesionalDAOMySQL()
+        return ProfesionalDAO() # <- Devolver la clase unificada

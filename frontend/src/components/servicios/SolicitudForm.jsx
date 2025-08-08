@@ -19,23 +19,59 @@ const SolicitudForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Solicitud de servicio:', formData);
-    // Aquí enviarías los datos al backend
-    
-    // Reset form
-    setFormData({
-      descripcion: '',
-      direccion: '',
-      telefono: '',
-      horarioAtencion: '',
-      fecha: '',
-      presupuesto: ''
-    });
-    
-    alert('Solicitud enviada exitosamente');
+
+    const requestData = {
+      id_usuario: 2, // ⚠️ Poner dinámico si tienes login
+      id_profesional: 2, // ⚠️ Selección futura
+      id_servicio: 2, // ⚠️ Puedes conectarlo a un dropdown más adelante
+      descripcion: formData.descripcion,
+      direccion_servicio: formData.direccion,
+      telefono_contacto: formData.telefono,
+      fecha_servicio: formData.fecha,
+      hora_servicio: extraerHoraDesdeHorario(formData.horarioAtencion),
+      presupuesto: parseInt(formData.presupuesto),
+      estado: 'pendiente'
+    };
+
+    try {
+      const response = await fetch('http://localhost:8000/solicitudes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+      });
+
+      if (response.ok) {
+        alert('Solicitud enviada exitosamente');
+        // Limpiar el formulario
+        setFormData({
+          descripcion: '',
+          direccion: '',
+          telefono: '',
+          horarioAtencion: '',
+          fecha: '',
+          presupuesto: ''
+        });
+      } else {
+        const error = await response.json();
+        console.error('Error al enviar solicitud:', error);
+        alert('Error al enviar solicitud: ' + error.detail);
+      }
+    } catch (error) {
+      console.error('Error al conectar con el servidor:', error);
+      alert('No se pudo enviar la solicitud. Intenta más tarde.');
+    }
   };
+
+  // Función para extraer una hora genérica desde horarioAtencion (puedes mejorarla después)
+  const extraerHoraDesdeHorario = (horario) => {
+    // Por ahora simplemente devuelvo 08:00:00 por defecto
+    return '08:00:00';
+  };
+
 
   return (
     <div className="solicitud-container">
@@ -51,7 +87,7 @@ const SolicitudForm = () => {
 
       <div className="solicitud-content">
         <h2 className="form-title">Detalle de la solicitud</h2>
-        
+
         <form onSubmit={handleSubmit} className="solicitud-form">
           <div className="form-group">
             <label className="form-label">*Descripción</label>

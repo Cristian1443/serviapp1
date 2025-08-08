@@ -31,7 +31,7 @@ export const registerUser = async (userData) => {
  * @returns {Promise<object>} - La respuesta del servidor.
  */
 export const registerProfessional = async (professionalData) => {
-    const response = await fetch(`${API_URL}/profesionales`, {
+    const response = await fetch(`${API_URL}/profesional`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -8,7 +8,7 @@ CREATE TABLE usuarios (
     correo VARCHAR(100) UNIQUE,
     telefono VARCHAR(20),
     direccion TEXT,
-    contraseña VARCHAR(255),
+    contrasena VARCHAR(255),
 	fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -18,7 +18,7 @@ CREATE TABLE profesionales (
     apellido VARCHAR(100),
     correo VARCHAR(100) UNIQUE,
     telefono VARCHAR(20),
-    contraseña VARCHAR(255),
+    contrasena VARCHAR(255),
     profesion VARCHAR(100),
     habilidades TEXT,
     zona_trabajo VARCHAR(100)
@@ -76,7 +76,7 @@ CREATE TABLE evidencias (
     id_usuario INT,
     id_profesional INT,
     tipo_actor ENUM('usuario', 'profesional'),
-    archivo_url LONGBLOB,
+    archivo_contenido LONGBLOB,
     descripcion TEXT,
     estado ENUM('satisfactorio', 'no_satisfactorio') NOT NULL,
     fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

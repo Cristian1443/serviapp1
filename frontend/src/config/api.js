@@ -40,6 +40,7 @@ export const apiRequest = async (endpoint, options = {}) => {
   }
 };
 
+
 // Funciones específicas para PQR
 export const pqrAPI = {
   // Crear nueva PQR
@@ -173,6 +174,14 @@ export const authAPI = {
     });
   },
 
+  // Registro Profesional
+  registerProfessional: async (professionalData) => {
+    return await apiRequest('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(professionalData)
+    });
+  },
+
   // Logout
   logout: async () => {
     return await apiRequest('/auth/logout', {
@@ -204,9 +213,36 @@ export const healthAPI = {
   }
 };
 
+// Funciones específicas para Solicitudes
+export const solicitudesAPI = {
+  listar: async () => {
+    return await apiRequest('/solicitudes/'); // Asume que tienes un endpoint GET /solicitudes/
+  },
+  // ... otras funciones que necesites para solicitudes
+};
+
+// Funciones específicas para Usuarios
+export const usuariosAPI = {
+  listar: async () => {
+    return await apiRequest('/usuarios/'); // Asume que tienes un endpoint GET /usuarios/
+  },
+  // ...
+};
+
+// Funciones específicas para Profesionales
+export const profesionalesAPI = {
+  listar: async () => {
+    return await apiRequest('/profesional/'); // Asume que tienes un endpoint GET /profesional/
+  },
+  // ...
+};
+
 export default {
   pqr: pqrAPI,
   evidencias: evidenciasAPI,
+  solicitudes: solicitudesAPI, // Añadir
+  usuarios: usuariosAPI,       // Añadir
+  profesional: profesionalesAPI, // Añadir
   auth: authAPI,
   health: healthAPI
 };

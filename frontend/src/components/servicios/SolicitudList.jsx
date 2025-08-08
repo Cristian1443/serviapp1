@@ -5,45 +5,30 @@ const SolicitudList = () => {
   const [solicitudes, setSolicitudes] = useState([]);
   const [filtro, setFiltro] = useState('todas');
 
+  // Estados para manejar la solicitud seleccionada y el estado de edición y los campos de edición
+  const [solicitudSeleccionada, setSolicitudSeleccionada] = useState(null);
+  const [editandoSolicitud, setEditandoSolicitud] = useState(null);
+  const [nuevaDescripcion, setNuevaDescripcion] = useState('');
+  const [nuevoPresupuesto, setNuevoPresupuesto] = useState('');
+
+
   // Simulación de datos - en la aplicación real vendrían del backend
   useEffect(() => {
-    const solicitudesMock = [
-      {
-        id: 1,
-        descripcion: 'Reparación de tubería en la cocina. Hay una fuga considerable que necesita atención urgente.',
-        direccion: 'Calle 123 #45-67, Bogotá',
-        telefono: '3001234567',
-        horarioAtencion: 'Lunes a viernes de 8:00 AM a 5:00 PM',
-        fecha: '2024-02-15',
-        presupuesto: 150000,
-        estado: 'pendiente',
-        fechaCreacion: '2024-01-28'
-      },
-      {
-        id: 2,
-        descripcion: 'Instalación de sistema eléctrico para nueva oficina. Incluye tomas, interruptores y tablero principal.',
-        direccion: 'Carrera 50 #30-20, Medellín',
-        telefono: '3009876543',
-        horarioAtencion: 'Disponible todo el día, fines de semana incluidos',
-        fecha: '2024-02-20',
-        presupuesto: 500000,
-        estado: 'en_proceso',
-        fechaCreacion: '2024-01-25'
-      },
-      {
-        id: 3,
-        descripcion: 'Limpieza profunda de apartamento de 3 habitaciones después de remodelación.',
-        direccion: 'Avenida 68 #40-55, Bogotá',
-        telefono: '3005555555',
-        horarioAtencion: 'Sábados y domingos únicamente',
-        fecha: '2024-02-10',
-        presupuesto: 200000,
-        estado: 'completado',
-        fechaCreacion: '2024-01-20'
+    const fetchSolicitudes = async () => {
+      try {
+        const usuario_id = localStorage.getItem('usuario_id'); // <-- obtener el id desde localStorage
+        const response = await fetch(`http://localhost:8000/solicitudes?usuario_id=${usuario_id}`);
+        if (!response.ok) throw new Error('Error al obtener solicitudes');
+        const data = await response.json();
+        setSolicitudes(data);
+      } catch (error) {
+        console.error('Error:', error);
       }
-    ];
-    setSolicitudes(solicitudesMock);
+    };
+
+    fetchSolicitudes();
   }, []);
+
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('es-CO', {
@@ -99,28 +84,28 @@ const SolicitudList = () => {
 
       <div className="solicitud-list-content">
         <h2 className="page-title">Mis Solicitudes de Servicio</h2>
-        
+
         <div className="filtros-container">
           <div className="filtros">
-            <button 
+            <button
               className={filtro === 'todas' ? 'filtro-btn active' : 'filtro-btn'}
               onClick={() => setFiltro('todas')}
             >
               Todas ({solicitudes.length})
             </button>
-            <button 
+            <button
               className={filtro === 'pendiente' ? 'filtro-btn active' : 'filtro-btn'}
               onClick={() => setFiltro('pendiente')}
             >
               Pendientes ({solicitudes.filter(s => s.estado === 'pendiente').length})
             </button>
-            <button 
+            <button
               className={filtro === 'en_proceso' ? 'filtro-btn active' : 'filtro-btn'}
               onClick={() => setFiltro('en_proceso')}
             >
               En Proceso ({solicitudes.filter(s => s.estado === 'en_proceso').length})
             </button>
-            <button 
+            <button
               className={filtro === 'completado' ? 'filtro-btn active' : 'filtro-btn'}
               onClick={() => setFiltro('completado')}
             >
@@ -128,7 +113,7 @@ const SolicitudList = () => {
             </button>
           </div>
         </div>
-        
+
         {solicitudesFiltradas.length === 0 ? (
           <div className="no-solicitudes">
             <p>No hay solicitudes {filtro !== 'todas' ? `con estado "${getEstadoTexto(filtro)}"` : ''}</p>
@@ -144,14 +129,14 @@ const SolicitudList = () => {
                       Creado: {formatDate(solicitud.fechaCreacion)}
                     </span>
                   </div>
-                  <div 
+                  <div
                     className="estado-badge"
                     style={{ backgroundColor: getEstadoColor(solicitud.estado) }}
                   >
                     {getEstadoTexto(solicitud.estado)}
                   </div>
                 </div>
-                
+
                 <div className="solicitud-body">
                   <div className="descripcion-section">
                     <h4>Descripción del Servicio</h4>
@@ -184,10 +169,47 @@ const SolicitudList = () => {
                 </div>
 
                 <div className="solicitud-actions">
-                  <button className="action-btn view-btn">Ver Detalles</button>
-                  <button className="action-btn edit-btn">Editar</button>
+                  <button
+                    className="action-btn view-btn"
+                    onClick={() => setSolicitudSeleccionada(solicitud)}
+                  >
+                    Ver Detalles
+                  </button>
+                  <button
+                    className="action-btn edit-btn"
+                    onClick={() => {
+                      setEditandoSolicitud(solicitud);
+                      setNuevaDescripcion(solicitud.descripcion);
+                      setNuevoPresupuesto(solicitud.presupuesto);
+                    }}
+                  >
+                    Editar
+                  </button>
                   {solicitud.estado === 'pendiente' && (
-                    <button className="action-btn cancel-btn">Cancelar</button>
+                    <button
+                      className="action-btn cancel-btn"
+                      onClick={async () => {
+                        const confirm = window.confirm('¿Estás seguro de cancelar esta solicitud?');
+                        if (!confirm) return;
+
+                        try {
+                          const response = await fetch(`http://localhost:8000/solicitudes/${solicitud.id}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ ...solicitud, estado: 'cancelado' }),
+                          });
+                          if (!response.ok) throw new Error('Error al cancelar');
+                          const updated = await response.json();
+                          setSolicitudes((prev) =>
+                            prev.map((s) => (s.id === updated.id ? updated : s))
+                          );
+                        } catch (error) {
+                          console.error('Error:', error);
+                        }
+                      }}
+                    >
+                      Cancelar
+                    </button>
                   )}
                 </div>
               </div>
@@ -195,6 +217,70 @@ const SolicitudList = () => {
           </div>
         )}
       </div>
+      {solicitudSeleccionada && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Detalle de Solicitud #{solicitudSeleccionada.id}</h3>
+            <p><strong>Descripción:</strong> {solicitudSeleccionada.descripcion}</p>
+            <p><strong>Dirección:</strong> {solicitudSeleccionada.direccion}</p>
+            <p><strong>Teléfono:</strong> {solicitudSeleccionada.telefono}</p>
+            <p><strong>Fecha:</strong> {formatDate(solicitudSeleccionada.fecha)}</p>
+            <p><strong>Hora:</strong> {solicitudSeleccionada.horarioAtencion}</p>
+            <p><strong>Presupuesto:</strong> {formatCurrency(solicitudSeleccionada.presupuesto)}</p>
+            <p><strong>Estado:</strong> {getEstadoTexto(solicitudSeleccionada.estado)}</p>
+            <button onClick={() => setSolicitudSeleccionada(null)}>Cerrar</button>
+          </div>
+        </div>
+      )}
+      {editandoSolicitud && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Editar Solicitud #{editandoSolicitud.id}</h3>
+            <label>
+              Descripción:
+              <input
+                type="text"
+                value={nuevaDescripcion}
+                onChange={(e) => setNuevaDescripcion(e.target.value)}
+              />
+            </label>
+            <label>
+              Presupuesto:
+              <input
+                type="number"
+                value={nuevoPresupuesto}
+                onChange={(e) => setNuevoPresupuesto(e.target.value)}
+              />
+            </label>
+            <button
+              onClick={async () => {
+                try {
+                  const response = await fetch(`http://localhost:8000/solicitudes/${editandoSolicitud.id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      ...editandoSolicitud,
+                      descripcion: nuevaDescripcion,
+                      presupuesto: parseInt(nuevoPresupuesto),
+                    }),
+                  });
+                  if (!response.ok) throw new Error('Error al editar solicitud');
+                  const updated = await response.json();
+                  setSolicitudes((prev) =>
+                    prev.map((s) => (s.id === updated.id ? updated : s))
+                  );
+                  setEditandoSolicitud(null);
+                } catch (error) {
+                  console.error('Error:', error);
+                }
+              }}
+            >
+              Guardar Cambios
+            </button>
+            <button onClick={() => setEditandoSolicitud(null)}>Cancelar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

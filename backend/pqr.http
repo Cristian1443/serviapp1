@@ -3,7 +3,7 @@ POST http://localhost:8000/pqr/
 Content-Type: application/json
 
 {
-  "id_solicitud": 13,
+  "id_solicitud": 1,
   "id_usuario": 1,
   "id_profesional": 1,
   "tipo": "peticion",

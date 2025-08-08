@@ -1,10 +1,10 @@
 {
   "db_engine": "postgres",
-    "host": "localhost",
-    "port": 3332,
-    "user": "postgres",
-    "password": "1443",
-    "database": "serviapp_db",
+  "host": "localhost",
+  "port": 5432,
+  "user": "postgres",
+  "password": "123456",
+  "database": "serviapp_db",
 
     "_db_engine": "mysql",
     "_host": "localhost",

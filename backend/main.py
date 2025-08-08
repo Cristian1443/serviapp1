@@ -4,6 +4,8 @@ from fastapi.responses import JSONResponse
 import uvicorn
 import os
 from datetime import datetime
+from config.db_test import test_db_connection
+
 
 # Importar módulo PQR (sistema nuevo que funciona)
 try:
@@ -26,7 +28,7 @@ except ImportError as e:
 # Importar módulo Profesionales
 try:
     # Se asume que la ruta es 'modulos.profesionales.logica.profesional_service'
-    from modulos.profesional.logica.profesional_service import router as profesional_router
+    from modulos.profesional.logica.profesional_service import router as profesionales_router
     PROFESIONAL_AVAILABLE = True
     print("✅ Módulo Profesionales cargado correctamente")
 except ImportError as e:
@@ -35,7 +37,7 @@ except ImportError as e:
 
 # Importar módulo Usuarios
 try:
-    from modulos.usuarios.controladores.usuario_controlador import router as usuario_router
+    from modulos.usuarios.logica.usuario_service import router as usuario_router
     USUARIOS_AVAILABLE = True
     print("✅ Módulo Usuarios cargado correctamente")
 except ImportError as e:
@@ -94,7 +96,7 @@ if EVIDENCIAS_AVAILABLE:
 
 # Incluir rutas Profesionales
 if PROFESIONAL_AVAILABLE:
-    app.include_router(profesional_router, prefix="/profesional", tags=["Profesional"])
+    app.include_router(profesionales_router, prefix="/profesional", tags=["Profesional"])
 
 # Incluir rutas Usuarios
 if USUARIOS_AVAILABLE:
@@ -121,7 +123,7 @@ async def api_info():
         "modulos": {
             "pqr": "Peticiones, Quejas y Reclamos",
             "evidencias": "Gestión de Evidencias",
-            "profesionales": "Gestión de Profesionales",
+            "profesional": "Gestión de Profesionales",
             "usuarios": "Gestión de Usuarios",
             "auth": "Autenticación y autorización",
             "health": "Monitoreo de salud del sistema"
@@ -129,7 +131,7 @@ async def api_info():
         "endpoints": {
             "pqr": "/pqr",
             "evidencias": "/evidencias",
-            "profesionales": "/profesionales",
+            "profesional": "/profesional",
             "usuarios": "/usuarios"
         }
     }
@@ -163,7 +165,6 @@ async def general_exception_handler(request: Request, exc: Exception):
 # Evento de inicio
 @app.on_event("startup")
 async def startup_event():
-    """Inicializar aplicación al arranque"""
     print("🚀 Iniciando ServiApp API...")
     
     # Confirmar estado de módulos
@@ -187,10 +188,12 @@ async def startup_event():
     else:
         print("⚠️ Módulo Usuarios no disponible")
 
-    
+    # ⬇️ Agrega esta línea para probar la base de datos
+    test_db_connection()
+
     print("✅ ServiApp API lista en http://localhost:8000")
     print("📚 Documentación disponible en http://localhost:8000/docs")
-
+    
 # Evento de apagado
 @app.on_event("shutdown")
 async def shutdown_event():

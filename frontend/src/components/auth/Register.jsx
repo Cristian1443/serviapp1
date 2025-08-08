@@ -58,11 +58,15 @@ const Register = ({ userType, onRegister, onBack }) => {
           zona_trabajo: formData.zona_trabajo,
           contrasena: formData.contrasena,
         });
+        response = await registerProfessional({
+        });
       } else {
         throw new Error("Tipo de usuario no válido.");
       }
 
       setSuccess(response.mensaje || '¡Cuenta creada exitosamente!');
+      // Nuevo: Mostrar alert al usuario
+      alert(response.mensaje || '¡Cuenta creada exitosamente!');
       // Opcional: puedes llamar a onRegister si necesitas hacer algo en el componente padre
       // onRegister(formData);
 

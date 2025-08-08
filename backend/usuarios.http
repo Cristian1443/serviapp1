@@ -3,10 +3,10 @@ POST http://localhost:8000/usuarios
 Content-Type: application/json
 
 {
-  "nombre": "Juan",
-  "apellido": "Pérez",
-  "correo": "juana.perez@example.com",
-  "telefono": "3214567890",
+  "nombre": "Maria Jose",
+  "apellido": "Polanco",
+  "correo": "MariaJose@example.com",
+  "telefono": "3112345678",
   "direccion": "Calle Falsa 123",
   "contrasena": "password123",
   "fecha_registro": 1754592000

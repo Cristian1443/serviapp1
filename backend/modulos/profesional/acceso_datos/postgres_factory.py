@@ -1,6 +1,6 @@
-from modulos.profesional.acceso_datos.profesional_dao import ProfesionalDAOPostgres
-from modulos.profesional.acceso_datos.dao_factory import ProfesionalDAOFactory
 
-class PostgresProfesionalDAOFactory(ProfesionalDAOFactory):
+from .profesional_dao import ProfesionalDAO
+
+class PostgresProfesionalDAOFactory:
     def crear_dao(self):
-        return ProfesionalDAOPostgres()
+        return ProfesionalDAO()

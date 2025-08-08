@@ -37,6 +37,34 @@ async def crear_profesional(req: Request):
     dao.guardar(nuevo_profesional)
     return {"mensaje": "Profesional creado exitosamente"}
 
+@router.post("/registro", status_code=status.HTTP_201_CREATED)
+async def crear_profesional_registro(req: Request):
+    """
+    Crea un nuevo profesional en la base de datos (ruta /registro).
+    """
+    data = await req.json()
+
+    try:
+        password = data.get("contrasena") or data.get("contraseña")
+        if not password:
+            raise KeyError("contrasena' o 'contraseña")
+
+        nuevo_profesional = ProfesionalDTO(
+            nombre=data["nombre"],
+            apellido=data["apellido"],
+            correo=data["correo"],
+            contrasena=password,
+            profesion=data["profesion"],
+            habilidades=data.get("habilidades"),
+            zona_trabajo=data.get("zona_trabajo"),
+            telefono=data.get("telefono")
+        )
+    except KeyError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"El campo requerido '{e.args[0]}' está ausente.")
+
+    dao.guardar(nuevo_profesional)
+    return {"mensaje": "Profesional creado exitosamente"}
+
 @router.get("/")
 def obtener_profesionales():
     """

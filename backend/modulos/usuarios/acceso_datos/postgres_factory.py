@@ -1,6 +1,7 @@
-from modulos.usuarios.acceso_datos.usuario_dao import UsuarioDAOPostgres
-from modulos.usuarios.acceso_datos.dao_factory import UsuarioDAOFactory
 
-class PostgresUsuarioDAOFactory(UsuarioDAOFactory):
+from .usuario_dao import UsuarioDAO
+
+
+class PostgresUsuarioDAOFactory:
     def crear_dao(self):
-        return UsuarioDAOPostgres()
+        return UsuarioDAO()

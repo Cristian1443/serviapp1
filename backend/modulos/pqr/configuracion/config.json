@@ -3,7 +3,7 @@
   "host": "localhost",
   "port": 5432,
   "user": "postgres",
-  "password": "1443",
+  "password": "123456",
   "database": "serviapp_db",
 
   "_db_engine": "mysql",
